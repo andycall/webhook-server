@@ -31,8 +31,8 @@ node main.js
 
 ## API
 
-*path* : 为Github上发送的地址的路由，若设置为`webhook`, 即地址为`http://example.com/webhook`
-*secret* : 为Github上设置的安全秘钥， 如果出现错误， 则会返回ERROR
++ ***path*** : 为Github上发送的地址的路由，若设置为`webhook`, 即地址为`http://example.com/webhook`
++ ***gsecret*** : 为Github上设置的安全秘钥， 如果出现错误， 则会返回ERROR
 
 返回的handler 为一个函数， 它接受request, response, callback 三个参数。
 提供一个简单的例子：
