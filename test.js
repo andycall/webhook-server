@@ -9,11 +9,6 @@ var path = require('path');
 var test =  require('tape');
 var dirlog = __dirname + "/log/";
 
-process.on('uncaughtException', function(err){
-	errorLog(err);
-	setTimeout(startServer, 5000);
-});
-
 function getTime(){
 	var date = new Date();
 	return date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();

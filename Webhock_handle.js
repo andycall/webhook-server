@@ -19,7 +19,7 @@ function create (options) {
 	if (typeof options.secret != 'string')
 		throw new TypeError('must provide a \'secret\' option');
 
-	// make it an EventEmitter, sort of
+	// 继承EventEmitter
 	handler.__proto__ = EventEmitter.prototype;
 	EventEmitter.call(handler);
 
