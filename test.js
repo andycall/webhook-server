@@ -27,7 +27,7 @@ function errorLog(msg){
 }
 
 function createLogDir(path){
-	if(!fs.existsSync(path) || fs.statSync(path).isDirectory()) {
+	if(!fs.existsSync(path) || !fs.statSync(path).isDirectory()) {
 		fs.mkdirSync(path);
 	}
 }
@@ -49,20 +49,29 @@ function startServer(){
 		var payload = event.payload;
 		var branch =  payload.ref.split("/")[2];
 		var origin =  payload.repository.git_url;
-
 		exec("cd " + __dirname + " && git pull " + origin + " " + branch, function(error, stdout, stderr){
 			var time = getTime();
-			console.log(error);
-			log("---------- " + time +" ------------\n"+
-				"Receive an push event from : \n" +
-				"push_time     :" + payload.commits.timestamp + "\n" +
-				"id       :" + payload.commits.id + "\n"+
-				"message  :" + payload.commits.message + "\n"+
-				"url      :" + payload.commits.url  + "\n" +
-				"username :" + payload.commits.committer.username + "\n" +
-				"email    :" + payload.commits.committer.email + "\n" +
-			"---------- END ------------\n");
+			var total_str = ["---------- " + time +" ------------\n"+
+					"There are the push events :"];
+			var commits_str = [];
+			payload.commits.forEach(function(value){
+				var committer_str = [];
+				committer_str.push("push_time     " + value.timestamp);
+				committer_str.push("id       :" + value.id);
+				committer_str.push("message  :" + value.message);
+				committer_str.push("url      :" + value.url);
+				committer_str.push("username :" + value.committer.username);
+				committer_str.push("email    :" + value.committer.email + "\n");
+				commits_str.push(committer_str.join("\n"));
+			});
+			total_str.push(commits_str.join("--------------------------\n"));
+			total_str.push(stdout);
+			total_str.push("---------- END ------------\n");
 
+			if(error){
+				return errorLog(msg);	
+			}
+			log(total_str.join('\n'));
 		});
 	});
 
