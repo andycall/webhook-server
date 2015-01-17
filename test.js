@@ -10,6 +10,7 @@ var test =  require('tape');
 var dirlog = __dirname + "/log/";
 
 process.on('uncaughtException', function(err){
+	errorLog(err);
 	setTimeout(startServer, 5000);
 });
 
@@ -45,7 +46,7 @@ function startServer(){
 	}).listen(7890);
 
 	handler.on('error', function(msg){
-		console.log("ERROR: ", msg);
+		errorLog(msg);
 	});
 
 	handler.on('push', function(event){
@@ -56,20 +57,17 @@ function startServer(){
 
 		exec("cd " + __dirname + " && git pull " + origin + " " + branch, function(error, stdout, stderr){
 			var time = getTime();
-			if(error != null){
-				errorLog(stderr);
-			}
-			else{
-				log("---------- " + time +" ------------\n"+
-					"Receive an push event from : \n" +
-					"push_time     :" + payload.commits.timestamp + "\n" +
-					"id       :" + payload.commits.id + "\n"+
-					"message  :" + payload.commits.message + "\n"+
-					"url      :" + payload.commits.url  + "\n" +
-					"username :" + payload.commits.committer.username + "\n" +
-					"email    :" + payload.commits.committer.email + "\n" +
-				"---------- END ------------\n");
-			}
+			console.log(error);
+			log("---------- " + time +" ------------\n"+
+				"Receive an push event from : \n" +
+				"push_time     :" + payload.commits.timestamp + "\n" +
+				"id       :" + payload.commits.id + "\n"+
+				"message  :" + payload.commits.message + "\n"+
+				"url      :" + payload.commits.url  + "\n" +
+				"username :" + payload.commits.committer.username + "\n" +
+				"email    :" + payload.commits.committer.email + "\n" +
+			"---------- END ------------\n");
+
 		});
 	});
 
