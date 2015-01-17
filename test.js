@@ -7,25 +7,32 @@ var stdout = process.stdout;
 var stdin = process.stdin;
 var path = require('path');
 var test =  require('tape');
-var dirlog = "./log/";
+var dirlog = __dirname + "/log/";
 
 process.on('uncaughtException', function(err){
 	setTimeout(startServer, 5000);
 });
 
 function getTime(){
-	var date = new date();
+	var date = new Date();
 	return date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
 }
 
 function log(msg){
 	var time = getTime();
+	createLogDir(dirlog);
 	fs.appendFileSync(dirlog + time + ".log", msg);
 }
 
-function createLogDir(){
-	if(!fs.existsSync(dirlog) || fs.statSync(dirlog).isDirectory()) {
-		fs.mkdirSync(dirlog);
+function errorLog(msg){
+	var time = getTime();
+	createLogDir(dirlog + 'error/');
+	fs.appendFileSync(dirlog + "error/" + time + '.log', msg);
+}
+
+function createLogDir(path){
+	if(!fs.existsSync(path) || fs.statSync(path).isDirectory()) {
+		fs.mkdirSync(path);
 	}
 }
 
@@ -35,7 +42,6 @@ function startServer(){
 			res.statusCode = 404;
 			res.end("ERROR");
 		});
-		createLogDir();
 	}).listen(7890);
 
 	handler.on('error', function(msg){
@@ -44,8 +50,27 @@ function startServer(){
 
 	handler.on('push', function(event){
 		console.log('receive an push event for %s to %s', event.payload.repository.name, event.payload.ref);
-		log("---------- " + getTime() + ' ' + event.payload.repository.name + ' ------------\n');
-		
+		var payload = event.payload;
+		var branch =  payload.ref.split("/")[2];
+		var origin =  payload.repository.git_url;
+
+		exec("cd " + __dirname + " && git pull " + origin + " " + branch, function(error, stdout, stderr){
+			var time = getTime();
+			if(error != null){
+				errorLog(stderr);
+			}
+			else{
+				log("---------- " + time +" ------------\n"+
+					"Receive an push event from : \n" +
+					"push_time     :" + payload.commits.timestamp + "\n" +
+					"id       :" + payload.commits.id + "\n"+
+					"message  :" + payload.commits.message + "\n"+
+					"url      :" + payload.commits.url  + "\n" +
+					"username :" + payload.commits.committer.username + "\n" +
+					"email    :" + payload.commits.committer.email + "\n" +
+				"---------- END ------------\n");
+			}
+		});
 	});
 
 	handler.on('issue', function(event){
@@ -57,5 +82,4 @@ function startServer(){
 	});
 }
 startServer();
-
 
