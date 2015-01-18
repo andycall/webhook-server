@@ -4,8 +4,7 @@ Github 自动项目更新工具
 
 ## Usage (单一用作Github自动更新工具)
 
-将test.js , Webhook_handle.js 文件copy到项目的根目录，
-
+将main.js , handler.js , package.json 以及这个README文件copy到项目的根目录，
 
 如果项目已有package.json
 
@@ -43,7 +42,7 @@ node main.js
 ## API
 
 + ***path*** : 为Github上发送的地址的路由，若设置为`webhook`, 即地址为`http://example.com/webhook`
-+ ***gsecret*** : 为Github上设置的安全秘钥， 如果出现错误， 则会返回ERROR
++ ***secret*** : 为Github上设置的安全秘钥， 如果出现错误， 则会返回ERROR
 
 返回的handler 为一个函数， 它接受request, response, callback 三个参数。
 提供一个简单的例子：
