@@ -4,13 +4,24 @@ Github 自动项目更新工具
 
 ## Usage (单一用作Github自动更新工具)
 
-将test.js , Webhook_handle.js , package.json 文件copy到项目的根目录，
+将test.js , Webhook_handle.js 文件copy到项目的根目录，
 
-先运行
+
+如果项目已有package.json
+
+则运行
+```
+npm install bl --save-dev
+```
+
+否则copy package.json 文件到根目录，然后
 
 ```
 npm install
 ```
+
+------------------------
+最后再运行
 
 ```
 node main.js
