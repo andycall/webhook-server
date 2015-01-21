@@ -4,27 +4,26 @@ Github 自动项目更新工具
 
 ## Usage (单一用作Github自动更新工具)
 
-将main.js , handler.js , package.json 以及这个README文件copy到项目的根目录，
-
-如果项目已有package.json
-
 则运行
 ```
-npm install bl --save-dev
+npm install webhook-server --save-dev
 ```
 
-否则copy package.json 文件到根目录，然后
-
 ```
-npm install
+screen
 ```
 
-------------------------
-最后再运行
+```
+cd node_modules/webhook-server
+```
+
 
 ```
-node main.js
+npm start
 ```
+
+然后关掉ssh远程命令行。
+
 
 如果是想在Linux上长期挂着的话， 可以使用screen命令
 

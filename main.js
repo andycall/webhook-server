@@ -6,7 +6,6 @@ var fs = require("fs");
 var stdout = process.stdout;
 var stdin = process.stdin;
 var path = require('path');
-var test =  require('tape');
 var dirlog = __dirname + "/log/";
 
 function getTime(){
