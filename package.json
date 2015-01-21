@@ -1,26 +1,27 @@
 {
-  "name": "github-webhook-handler",
-  "version": "0.3.4",
-  "description": "Web handler / middleware for processing GitHub Webhooks",
-  "main": "github-webhook-handler.js",
+  "name": "WebHook-server",
+  "version": "0.0.1",
+  "description": "An Automatic Refresh tool for your respository",
+  "main": "main.js",
   "scripts": {
-    "test": "node test.js"
+    "start": "node main.js"
   },
   "keywords": [
     "github",
     "webhooks"
   ],
-  "author": "Rod Vagg <r@va.gg> (http://r.va.gg)",
+  "author": "Andy Call <dongtiangche@outlook.com> (http://blog.andycall.net)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rvagg/github-webhook-handler.git"
+    "url": "https://github.com/andycall/WebHook.git"
   },
   "license": "MIT",
   "dependencies": {
     "bl": "~0.8.0"
   },
-  "devDependencies": {
-    "tape": "~2.12.3",
-    "through2": "~0.4.1"
-  }
+  "bugs": {
+    "url": "https://github.com/andycall/WebHook/issues"
+  },
+  "homepage": "https://github.com/andycall/WebHook",
+  "devDependencies": {}
 }
