@@ -1,5 +1,5 @@
 {
-  "name": "WebHook-server",
+  "name": "webhook-server",
   "version": "0.0.1",
   "description": "An Automatic Refresh tool for your respository",
   "main": "main.js",
