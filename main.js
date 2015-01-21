@@ -37,8 +37,10 @@ function startServer(){
 			res.statusCode = 404;
 			res.end("ERROR");
 		});
-		console.log("server Listening on PORT 7890");
+		
 	}).listen(7890);
+
+	console.log("server Listening on PORT 7890");
 
 	handler.on('error', function(msg){
 		errorLog(msg);
